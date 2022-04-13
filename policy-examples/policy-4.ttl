@@ -1,0 +1,36 @@
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix odrl: <http://www.w3.org/ns/odrl/2/> .
+@prefix dpv: <http://www.w3.org/ns/dpv#> .
+@prefix acl: <http://www.w3.org/ns/auth/acl#> .
+@prefix cert: <http://www.w3.org/ns/auth/cert#> .
+@prefix oac: <https://w3id.org/oac/> .
+
+@prefix : <http://example.com> .
+
+:policy-4 a odrl:Policy ;
+    odrl:profile oac: ;
+    rdfs:comment """App 2, as identified by their URL https://example-app-2.com, 
+    requests permission to collect and produce a copy of the health records, 
+    medical prescriptions and health history of users for the purpose of performing 
+    academic research and make the anonymised information available to a Company A.""" ;
+    odrl:assigner <https://example-app-2.com> ;
+    odrl:target oac:HealthRecord, oac:Prescription, oac:HealthHistory ;
+    odrl:permission [
+        a odrl:Permission ;
+        odrl:action oac:Collect, oac:Copy ;
+        odrl:constraint [
+        odrl:leftOperand oac:Purpose ;
+            odrl:operator odrl:isA ;
+            odrl:rightOperand dpv:AcademicResearch 
+        ]
+    ] ;
+    odrl:permission [
+        a odrl:Permission ;
+        odrl:action oac:Anonymise, oac:MakeAvailable ;
+        odrl:constraint [
+            odrl:leftOperand oac:Recipient ;
+            odrl:operator odrl:isA ;
+            odrl:rightOperand [ a dpv:ThirdParty ; dpv:hasName "Company A" ]
+        ]
+    ] .

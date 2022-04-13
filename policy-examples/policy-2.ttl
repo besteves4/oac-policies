@@ -1,0 +1,25 @@
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix odrl: <http://www.w3.org/ns/odrl/2/> .
+@prefix dpv: <http://www.w3.org/ns/dpv#> .
+@prefix acl: <http://www.w3.org/ns/auth/acl#> .
+@prefix cert: <http://www.w3.org/ns/auth/cert#> .
+@prefix oac: <https://w3id.org/oac/> .
+
+@prefix : <http://example.com> .
+
+:policy-2 a odrl:Policy ;
+    odrl:profile oac: ;
+    rdfs:comment '''Anne, as identified by her WebID https://anne.databox.me/profile/card#me, 
+    permits read access operations over her contact data for the purpose of academic research and non-commercial research.''' ;
+    odrl:permission [
+        a odrl:Permission ;
+        odrl:assigner <https://anne.databox.me/profile/card#me> ;
+        odrl:target oac:Contact ;
+        odrl:action oac:Read ;
+        odrl:constraint [
+            odrl:leftOperand oac:Purpose ;
+            odrl:operator odrl:isAnyOf ;
+            odrl:rightOperand dpv:AcademicResearch, dpv:NonCommercialResearch 
+        ] 
+    ] .
