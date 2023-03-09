@@ -1,0 +1,27 @@
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX odrl: <http://www.w3.org/ns/odrl/2/>
+PREFIX dct: <http://purl.org/dc/terms/>
+PREFIX dpv: <https://w3id.org/dpv#>
+PREFIX oac: <https://w3id.org/oac#>
+PREFIX ex: <http://example.com>
+
+<https://example.com/request1> a odrl:Request;
+    dct:description "User request to use behavioral data for research and development purposes" ;
+    dct:creator ex:userB ;
+    dct:issued "2022-11-08T17:58:31"^^xsd:dateTime ;
+    odrl:uid ex:request1;
+    odrl:profile oac: ;
+    odrl:permission [
+        odrl:assignee ex:userB ;
+        odrl:action oac:Use ;
+        odrl:target oac:Behavioral ;
+        odrl:constraint [
+            dct:title "Purpose for processing is to conduct research in the R&D project X." ;
+            odrl:leftOperand oac:Purpose ;
+            odrl:operator odrl:eq ;
+            odrl:rightOperand ex:RDProjectX ] ] .
+
+ex:RDProjectX a dpv:ResearchAndDevelopment ;
+    rdfs:label "Conduct research in the R&D project X." .

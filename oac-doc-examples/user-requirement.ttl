@@ -1,0 +1,24 @@
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX odrl: <http://www.w3.org/ns/odrl/2/>
+PREFIX dct: <http://purl.org/dc/terms/>
+PREFIX dpv: <https://w3id.org/dpv#>
+PREFIX oac: <https://w3id.org/oac#>
+PREFIX ex: <http://example.com>
+
+<https://example.com/requirement1> a oac:RequirementPolicy ;
+    dct:description "Requirement to read identifier data for identity verification purposes" ;
+    dct:creator ex:userA ;
+    dct:issued "2022-11-08T16:30:15"^^xsd:dateTime ;
+    odrl:uid ex:requirement1 ;
+    odrl:profile oac: ;
+    odrl:permission [
+        odrl:assigner ex:userA ;
+        odrl:target oac:Identifier ;
+        odrl:action oac:Read ;
+        odrl:constraint [
+            dct:title "Purpose for access is to verify the identity of the assigner." ; 
+            odrl:leftOperand oac:Purpose ;
+            odrl:operator odrl:isA ;
+            odrl:rightOperand dpv:IdentityVerification ] ] .

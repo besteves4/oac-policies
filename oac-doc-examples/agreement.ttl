@@ -1,0 +1,29 @@
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX odrl: <http://www.w3.org/ns/odrl/2/>
+PREFIX dct: <http://purl.org/dc/terms/>
+PREFIX dpv: <https://w3id.org/dpv#>
+PREFIX oac: <https://w3id.org/oac#>
+PREFIX ex: <http://example.com>
+
+<https://example.com/agreement1> a odrl:Agreement ;
+    odrl:profile oac: ;  
+    dct:description "Agreement between user A and user B to read behavioral data for research and development purposes" ;
+    dct:creator ex:userA ;
+    dct:issued "2022-11-08T18:13:37"^^xsd:dateTime ;
+    odrl:uid ex:agreement1 ;
+    dct:references ex:offer1, ex:request1 ;
+    dpv:hasDataSubject ex:userA ;
+    dpv:hasDataController ex:userB ;
+    dpv:hasLegalBasis dpv:Consent ;
+    odrl:permission [
+        odrl:assigner ex:userA ;
+        odrl:assignee ex:userB ;
+        odrl:action oac:Read ;
+        odrl:target oac:Behavioral ;
+        odrl:constraint [
+            dct:title "Purpose for processing is to conduct research in the R&D project X." ;
+            odrl:leftOperand oac:Purpose ;
+            odrl:operator odrl:eq ;
+            odrl:rightOperand ex:RDProjectX ] ] .

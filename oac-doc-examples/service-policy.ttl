@@ -1,0 +1,25 @@
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX odrl: <http://www.w3.org/ns/odrl/2/>
+PREFIX dct: <http://purl.org/dc/terms/>
+PREFIX dpv: <https://w3id.org/dpv#>
+PREFIX oac: <https://w3id.org/oac#>
+PREFIX ex: <http://example.com>
+
+<https://example.com/policy4> a oac:PreferencePolicy ;
+    dct:description "Permission for service A to write TV viewing behavior data if the purpose is academic research" ;
+    dct:creator ex:userA ;
+    dct:issued "2022-11-09T09:22:42"^^xsd:dateTime ;
+    odrl:uid ex:policy4 ;
+    odrl:profile oac: ;
+    odrl:permission [
+        odrl:assigner ex:userA ;
+        oac:service ex:serviceA ;
+        odrl:action oac:Write ;
+        odrl:target oac:TVViewingBehavior ;
+        odrl:constraint [
+            dct:title "Purpose for access is to conduct academic research." ;
+            odrl:leftOperand oac:Purpose ;
+            odrl:operator odrl:isA ;
+            odrl:rightOperand dpv:AcademicResearch ] ] .

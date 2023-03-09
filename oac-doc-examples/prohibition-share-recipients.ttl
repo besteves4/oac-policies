@@ -1,0 +1,23 @@
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX odrl: <http://www.w3.org/ns/odrl/2/>
+PREFIX dct: <http://purl.org/dc/terms/>
+PREFIX dpv: <https://w3id.org/dpv#>
+PREFIX oac: <https://w3id.org/oac#>
+PREFIX ex: <http://example.com>
+
+<https://example.com/requirement3> a oac:RequirementPolicy ;
+    dct:description "Requirement to prohibit the sharing of a resource with more than 3 recipients." ;
+    dct:creator ex:userA ;
+    dct:issued "2023-03-09T13:50:25"^^xsd:dateTime ;
+    odrl:uid ex:requirement3 ;
+    odrl:profile oac: ;
+    odrl:prohibition [
+        odrl:assigner ex:userA ;
+        odrl:target ex:resourceA ;
+        odrl:action oac:Share ;
+        odrl:constraint [
+            odrl:leftOperand oac:Recipient ;
+            odrl:operator odrl:gt ;
+            odrl:rightOperand "3"^^xsd:integer ] ] .
