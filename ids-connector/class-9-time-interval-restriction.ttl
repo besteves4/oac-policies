@@ -1,0 +1,34 @@
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX odrl: <http://www.w3.org/ns/odrl/2/>
+PREFIX dct: <http://purl.org/dc/terms/>
+PREFIX dpv: <https://w3id.org/dpv#>
+PREFIX dpv-tech: <https://w3id.org/dpv/dpv-tech#>
+PREFIX oac: <https://w3id.org/oac#>
+PREFIX ex: <http://example.com>
+
+<https://example.com/policy9> a odrl:Offer ;
+    dct:description "Restrict the data usage to a specific time interval" ;
+    rdfs:comment """odrl:dateTime left operand can be used to specify a point in time when the usage of data is allowed.
+    The odrl:gt operator can then be used to specify the start of the temporal interval where the usage of the data is
+    allowed/restricted and odrl:lt to specify the end of the temporal interval.""" ;
+    odrl:uid ex:policy9 ;
+    odrl:permission [
+        odrl:assigner ex:dataProviderA ;
+        odrl:action odrl:use ;
+        odrl:target ex:assetA ;
+        odrl:constraint [
+            odrl:and ex:after, ex:before
+        ] 
+    ] .
+
+ex:after a odrl:Constraint ;
+    odrl:leftOperand odrl:dateTime ;
+    odrl:operator odrl:gt ;
+    odrl:rightOperand "2023-06-30T00:00Z"^^xsd:dateTimeStamp .
+
+ex:before a odrl:Constraint ;
+    odrl:leftOperand odrl:dateTime ;
+    odrl:operator odrl:lt ;
+    odrl:rightOperand "2023-12-31T00:00Z"^^xsd:dateTimeStamp .

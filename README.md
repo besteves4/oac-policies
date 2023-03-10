@@ -7,7 +7,7 @@ This repository contains a growing collection of examples on how to use the [ODR
 The repository contains the following work:
 
 - [`./oac-doc-examples`](./oac-doc-examples) folder contains the examples described in [OAC's HTML documentation](https://w3id.org/oac)
-
+- [`./ids-connector`](./ids-connector) folder contains the examples described in [IDSA Position Paper Usage Control in the IDS](https://internationaldataspaces.org/download/21053/)
 
 -----------------------
 

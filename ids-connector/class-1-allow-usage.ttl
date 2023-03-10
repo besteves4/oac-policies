@@ -1,0 +1,20 @@
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX odrl: <http://www.w3.org/ns/odrl/2/>
+PREFIX dct: <http://purl.org/dc/terms/>
+PREFIX dpv: <https://w3id.org/dpv#>
+PREFIX oac: <https://w3id.org/oac#>
+PREFIX ex: <http://example.com>
+
+<https://example.com/policy1> a odrl:Offer ;
+    dct:description "Permission to use data" ;
+    rdfs:comment """To inhibit the usage of data, this policy can be modified to say ex:policy1 odrl:prohibition [...] . 
+        Also, to restrict the types of actions that can be performed on the data, providers can change the 
+        _: odrl:action odrl:use triple to something more specific such as odrl:distribute or odrl:delete.""" ;
+    odrl:uid ex:policy1 ;
+    odrl:permission [
+        odrl:assigner ex:dataProviderA ;
+        odrl:action odrl:use ;
+        odrl:target ex:assetA
+    ] .

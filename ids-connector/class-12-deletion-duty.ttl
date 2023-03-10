@@ -1,0 +1,41 @@
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX odrl: <http://www.w3.org/ns/odrl/2/>
+PREFIX dct: <http://purl.org/dc/terms/>
+PREFIX dpv: <https://w3id.org/dpv#>
+PREFIX dpv-tech: <https://w3id.org/dpv/dpv-tech#>
+PREFIX oac: <https://w3id.org/oac#>
+PREFIX ex: <http://example.com>
+
+<https://example.com/policy12> a odrl:Offer ;
+    dct:description "Delete the data after usage" ;
+    rdfs:comment """A policy of this type shall be used to clarify when the data must be deleted; 
+    it shall be immediately after the usage or after a delay period or before a specified date and time.""" ;
+    odrl:uid ex:policy12 ;
+    odrl:permission [
+        odrl:assigner ex:dataProviderA ;
+        odrl:action odrl:use ;
+        odrl:target ex:assetA ;
+        odrl:constraint [
+            odrl:and ex:after, ex:before
+        ] ;
+        odrl:duty [
+            odrl:action odrl:delete ;
+            odrl:constraint [
+                    odrl:leftOperand odrl:dateTime ;
+                    odrl:operator odrl:eq ;
+                    odrl:rightOperand "2023-12-31T00:01Z"^^xsd:dateTimeStamp
+            ]
+        ]
+    ] .
+
+ex:after a odrl:Constraint ;
+    odrl:leftOperand odrl:dateTime ;
+    odrl:operator odrl:gt ;
+    odrl:rightOperand "2023-06-30T00:00Z"^^xsd:dateTimeStamp .
+
+ex:before a odrl:Constraint ;
+    odrl:leftOperand odrl:dateTime ;
+    odrl:operator odrl:lt ;
+    odrl:rightOperand "2023-12-31T00:00Z"^^xsd:dateTimeStamp .

@@ -1,0 +1,21 @@
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX odrl: <http://www.w3.org/ns/odrl/2/>
+PREFIX dct: <http://purl.org/dc/terms/>
+PREFIX dpv: <https://w3id.org/dpv#>
+PREFIX oac: <https://w3id.org/oac#>
+PREFIX ex: <http://example.com>
+
+<https://example.com/policy3> a odrl:Offer ;
+    dct:description "Restrict the data usage to specific applications" ;
+    rdfs:comment """Restriction of usage can be specified to an application or group of applications by using the oac:application
+    property, which specifies the application(s) that can be used by the assignee to intyeract with the data.""" ;
+    odrl:uid ex:policy3 ;
+    odrl:profile oac: ;
+    odrl:permission [
+        odrl:assigner ex:dataProviderA ;
+        oac:application ex:applicationA ;
+        odrl:action odrl:use ;
+        odrl:target ex:assetA
+    ] .
