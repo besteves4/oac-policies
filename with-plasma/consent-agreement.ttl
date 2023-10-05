@@ -1,0 +1,63 @@
+PREFIX dcterms: <http://purl.org/dc/terms/>
+PREFIX dpv: <https://w3id.org/dpv#>
+PREFIX dpv-legal: <https://w3id.org/dpv/dpv-legal#>
+PREFIX oac: <https://w3id.org/oac#>
+PREFIX odrl: <http://www.w3.org/ns/odrl/2/>
+PREFIX plasma: <https://w3id.org/plasma#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX ex: <https://example.com/>
+
+<https://example.com/agreement1> a odrl:Agreement, plasma:UserConsent ;
+  odrl:profile oac: ;
+  dcterms:description "Agreement to ACCESS DATA_TYPE data for PURPOSE based on consent." ;
+  dcterms:creator ex:userA ;
+  dcterms:issued "2022-11-08T18:13:37"^^xsd:dateTime ;
+  odrl:uid ex:agreement1 ;
+  dcterms:references ex:offer1, ex:request1 ;
+  dpv:hasDataSubject ex:userA ;
+  dpv:hasDataController ex:companyB ;
+  dpv:hasDataProcessor ex:companyC ;
+  dpv:hasLegalBasis dpv:Consent ;
+  odrl:permission [
+    odrl:assigner ex:userA ;
+    odrl:assignee ex:companyB ;
+    odrl:action oac:Read ;
+    odrl:target oac:Age ;
+    odrl:constraint [
+      odrl:and ex:purposeConstraint, ex:spatialConstraint, ex:systemConstraint
+    ]
+  ] .
+
+<https://example.com/userA> a plasma:DataSubject ;
+  dpv:hasName "Beatriz" .
+
+<https://example.com/companyB> a dpv:DataController, plasma:AppDeveloper ;
+  dpv:hasName "VITO" .
+
+# TBD if they are really a processor or if they are a controller
+<https://example.com/companyC> a dpv:DataProcessor, plasma:ServiceProvider ;
+  dpv:hasName "VPP" .
+
+# TBD if the specific purpose related to this particular user consent is well modelled
+<https://example.com/PatientQuestionnairesToProduceQualityReports> a dpv:Purpose ;
+  rdfs:subClassOf dpv:ServiceProvision ;
+  rdfs:label "Process patient questionnaires to produce Quality-of-Hospital-Care reports for the government and public." .
+
+<https://example.com/purposeConstraint> a odrl:Constraint ;
+  dcterms:title "Purpose for access is to process patient questionnaires to produce Quality-of-Hospital-Care reports for the government and public." ;
+  odrl:leftOperand oac:Purpose ;
+  odrl:operator odrl:eq ;
+  odrl:rightOperand ex:PatientQuestionnairesToProduceQualityReports .
+
+# processing takes place on Azure infrastructure, running in Europe
+<https://example.com/spatialConstraint> a odrl:Constraint ;
+  dcterms:title "Processing takes place in Europe." ;
+  odrl:leftOperand odrl:spatial ;
+  odrl:operator odrl:eq ;
+  odrl:rightOperand dpv-legal:Europe .
+<https://example.com/systemConstraint> a odrl:Constraint ;
+  dcterms:title "Processing takes place  on Azure infrastructure." ;
+  odrl:leftOperand odrl:systemDevice ;
+  odrl:operator odrl:eq ;
+  odrl:rightOperand "Some identifier/code of the Azure infrastructure." .
