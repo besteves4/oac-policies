@@ -8,9 +8,10 @@ PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 PREFIX ex: <https://example.com/>
 
+# TBD is the target a data type (patient questionnaires) or specific resource?
 <https://example.com/agreement1> a odrl:Agreement, plasma:UserConsent ;
   odrl:profile oac: ;
-  dcterms:description "Agreement to ACCESS DATA_TYPE data for PURPOSE based on consent." ;
+  dcterms:description "Agreement to read DATA_TYPE data, to produce Quality-of-Hospital-Care reports, based on consent." ;
   dcterms:creator ex:userA ;
   dcterms:issued "2022-11-08T18:13:37"^^xsd:dateTime ;
   odrl:uid ex:agreement1 ;
@@ -40,15 +41,15 @@ PREFIX ex: <https://example.com/>
   dpv:hasName "VPP" .
 
 # TBD if the specific purpose related to this particular user consent is well modelled
-<https://example.com/PatientQuestionnairesToProduceQualityReports> a dpv:Purpose ;
+<https://example.com/ProduceQualityHospitalCareReports> a dpv:Purpose ;
   rdfs:subClassOf dpv:ServiceProvision ;
-  rdfs:label "Process patient questionnaires to produce Quality-of-Hospital-Care reports for the government and public." .
+  rdfs:label "Produce Quality-of-Hospital-Care reports for the government and public." .
 
 <https://example.com/purposeConstraint> a odrl:Constraint ;
-  dcterms:title "Purpose for access is to process patient questionnaires to produce Quality-of-Hospital-Care reports for the government and public." ;
+  dcterms:title "Purpose for access is to produce Quality-of-Hospital-Care reports for the government and public." ;
   odrl:leftOperand oac:Purpose ;
   odrl:operator odrl:eq ;
-  odrl:rightOperand ex:PatientQuestionnairesToProduceQualityReports .
+  odrl:rightOperand ex:ProduceQualityHospitalCareReports .
 
 # processing takes place on Azure infrastructure, running in Europe
 <https://example.com/spatialConstraint> a odrl:Constraint ;
@@ -56,6 +57,7 @@ PREFIX ex: <https://example.com/>
   odrl:leftOperand odrl:spatial ;
   odrl:operator odrl:eq ;
   odrl:rightOperand dpv-legal:Europe .
+
 <https://example.com/systemConstraint> a odrl:Constraint ;
   dcterms:title "Processing takes place  on Azure infrastructure." ;
   odrl:leftOperand odrl:systemDevice ;
