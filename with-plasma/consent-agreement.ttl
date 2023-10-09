@@ -1,6 +1,7 @@
 PREFIX dcterms: <http://purl.org/dc/terms/>
 PREFIX dpv: <https://w3id.org/dpv#>
 PREFIX dpv-legal: <https://w3id.org/dpv/dpv-legal#>
+PREFIX dpv-tech: <https://w3id.org/dpv/dpv-tech#>
 PREFIX oac: <https://w3id.org/oac#>
 PREFIX odrl: <http://www.w3.org/ns/odrl/2/>
 PREFIX plasma: <https://w3id.org/plasma#>
@@ -12,32 +13,32 @@ PREFIX ex: <https://example.com/>
 <https://example.com/agreement1> a odrl:Agreement, plasma:UserConsent ;
   odrl:profile oac: ;
   dcterms:description "Agreement to read DATA_TYPE data, to produce Quality-of-Hospital-Care reports, based on consent." ;
-  dcterms:creator ex:userA ;
+  dcterms:creator ex:Beatriz ;
   dcterms:issued "2022-11-08T18:13:37"^^xsd:dateTime ;
   odrl:uid ex:agreement1 ;
   dcterms:references ex:offer1, ex:request1 ;
-  dpv:hasDataSubject ex:userA ;
-  dpv:hasDataController ex:companyB ;
-  dpv:hasDataProcessor ex:companyC ;
+  dpv:hasDataSubject ex:Beatriz ;
+  dpv:hasDataController ex:VITO ;
+  dpv:hasDataProcessor ex:VPP ;
   dpv:hasLegalBasis dpv:Consent ;
   odrl:permission [
-    odrl:assigner ex:userA ;
-    odrl:assignee ex:companyB ;
+    odrl:assigner ex:Beatriz ;
+    odrl:assignee ex:VITO ;
     odrl:action oac:Read ;
     odrl:target oac:Age ;
     odrl:constraint [
-      odrl:and ex:purposeConstraint, ex:spatialConstraint, ex:systemConstraint
+      odrl:and ex:Constraint_Purpose_ProduceQualityHospitalCareReports, ex:Constraint_Spatial_Europe, ex:Constraint_SystemInfra_Azure
     ]
   ] .
 
-<https://example.com/userA> a plasma:DataSubject ;
+<https://example.com/Beatriz> a plasma:DataSubject ;
   dpv:hasName "Beatriz" .
 
-<https://example.com/companyB> a dpv:DataController, plasma:AppDeveloper ;
+<https://example.com/VITO> a dpv:DataController, plasma:AppDeveloper ;
   dpv:hasName "VITO" .
 
 # TBD if they are really a processor or if they are a controller
-<https://example.com/companyC> a dpv:DataProcessor, plasma:ServiceProvider ;
+<https://example.com/VPP> a dpv:DataProcessor, plasma:ServiceProvider ;
   dpv:hasName "VPP" .
 
 # TBD if the specific purpose related to this particular user consent is well modelled
@@ -45,21 +46,58 @@ PREFIX ex: <https://example.com/>
   rdfs:subClassOf dpv:ServiceProvision ;
   rdfs:label "Produce Quality-of-Hospital-Care reports for the government and public." .
 
-<https://example.com/purposeConstraint> a odrl:Constraint ;
+<https://example.com/Constraint_Purpose_ProduceQualityHospitalCareReports> a odrl:Constraint ;
   dcterms:title "Purpose for access is to produce Quality-of-Hospital-Care reports for the government and public." ;
   odrl:leftOperand oac:Purpose ;
   odrl:operator odrl:eq ;
   odrl:rightOperand ex:ProduceQualityHospitalCareReports .
 
 # processing takes place on Azure infrastructure, running in Europe
-<https://example.com/spatialConstraint> a odrl:Constraint ;
+<https://example.com/Constraint_Spatial_Europe> a odrl:Constraint ;
   dcterms:title "Processing takes place in Europe." ;
   odrl:leftOperand odrl:spatial ;
   odrl:operator odrl:eq ;
   odrl:rightOperand dpv-legal:Europe .
 
-<https://example.com/systemConstraint> a odrl:Constraint ;
+<https://example.com/Constraint_SystemInfra_Azure> a odrl:Constraint ;
   dcterms:title "Processing takes place  on Azure infrastructure." ;
   odrl:leftOperand odrl:systemDevice ;
   odrl:operator odrl:eq ;
   odrl:rightOperand "Some identifier/code of the Azure infrastructure." .
+
+# Athumi (who are the Pod operators), and also Inrupt's ESS implementation (the Solid sever instance)
+# If we declare that plasma:Provider and plasma:Developer are subclasses of dpv-tech:TechnologyProvider
+# and dpv-tech:TechnologyDeveloper, respectively, then we can reuse dpv-tech:hasProvider and 
+# dpv-tech:hasDeveloper to associate with Pod providers, Infrastructure providers, and so on
+# OR we specify a property for each "type" or provider/developer
+# Properties to indicate the SolidPlatform and the SolidSpecification are also needed
+<https://example.com/PodManagementData> a plasma:PodManagementData ;
+  dcterms:title "Metadata about Pod xxx" ;
+  dpv-tech:hasProvider <https://example.com/PodProvider_Athumi> ;
+  dpv-tech:hasProvider <https://example.com/SolidPlatformProvider_Inrupt> ;
+  dpv-tech:hasProvider <https://example.com/InfrastructureProvider_Amazon> ;
+  plasma:implementedSolidPlatform <https://example.com/SolidPlatform_ESS> ;
+  plasma:implementedSolidSpecification <https://example.com/SolidSpecification_v0_10_0> .
+
+
+# All entities should have at least name, address, contact
+<https://example.com/PodProvider_Athumi> a plasma:PodProvider ;
+  dpv:hasName "Athumi" ;
+  dpv:hasAddress "" ;
+  dpv:hasContact "" .
+
+<https://example.com/SolidPlatformProvider_Inrupt> a plasma:SolidPlatformProvider ;
+  dpv:hasName "Inrupt" .
+
+# Amazon according to https://solidproject.org/users/get-a-pod ?
+<https://example.com/InfrastructureProvider_Amazon> a plasma:InfrastructureProvider ;
+  dpv:hasName "Amazon" .
+
+# TBD what metadata should we provide with the platform ?
+<https://example.com/SolidPlatform_ESS> a plasma:SolidPlatform ;
+  dpv-tech:hasProvider <https://example.com/SolidPlatformProvider_Inrupt> ;
+  dcterms:source <https://www.inrupt.com/products/enterprise-solid-server> .
+
+# TBD what metadata should we provide with the specification ? 
+<https://example.com/SolidSpecification_v0_10_0> a plasma:SolidSpecification ;
+  dcterms:source <https://solidproject.org/TR/2022/protocol-20221231> .
