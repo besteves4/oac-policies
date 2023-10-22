@@ -7,7 +7,7 @@ PREFIX dpv: <https://w3id.org/dpv#>
 PREFIX oac: <https://w3id.org/oac#>
 PREFIX ex: <http://example.com>
 
-<https://example.com/requirement1> a oac:RequirementPolicy ;
+<https://example.com/requirement1> a oac:Requirement ;
     dct:description "Requirement to read identifier data for identity verification purposes" ;
     dct:creator ex:userA ;
     dct:issued "2022-11-08T16:30:15"^^xsd:dateTime ;

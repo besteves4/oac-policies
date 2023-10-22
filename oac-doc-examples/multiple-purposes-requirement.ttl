@@ -7,7 +7,7 @@ PREFIX dpv: <https://w3id.org/dpv#>
 PREFIX oac: <https://w3id.org/oac#>
 PREFIX ex: <http://example.com>
 
-<https://example.com/requirement2> a oac:RequirementPolicy ;
+<https://example.com/requirement2> a oac:Requirement ;
     dct:description "Requirement to read work email address for human resource management or fulfilment of obligation purposes." ;
     dct:creator ex:userA ;
     dct:issued "2023-03-09T11:41:06"^^xsd:dateTime ;

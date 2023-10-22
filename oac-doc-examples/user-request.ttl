@@ -7,11 +7,11 @@ PREFIX dpv: <https://w3id.org/dpv#>
 PREFIX oac: <https://w3id.org/oac#>
 PREFIX ex: <http://example.com>
 
-<https://example.com/request1> a odrl:Request;
+<https://example.com/request1> a odrl:Request ;
     dct:description "User request to use behavioral data for research and development purposes" ;
     dct:creator ex:userB ;
     dct:issued "2022-11-08T17:58:31"^^xsd:dateTime ;
-    odrl:uid ex:request1;
+    odrl:uid ex:request1 ;
     odrl:profile oac: ;
     odrl:permission [
         odrl:assignee ex:userB ;
@@ -23,5 +23,6 @@ PREFIX ex: <http://example.com>
             odrl:operator odrl:eq ;
             odrl:rightOperand ex:RDProjectX ] ] .
 
-ex:RDProjectX a dpv:ResearchAndDevelopment ;
+ex:RDProjectX a dpv:Purpose ;
+    rdfs:subClassOf dpv:ResearchAndDevelopment ;
     rdfs:label "Conduct research in the R&D project X." .

@@ -7,7 +7,7 @@ PREFIX dpv: <https://w3id.org/dpv#>
 PREFIX oac: <https://w3id.org/oac#>
 PREFIX ex: <http://example.com>
 
-<https://example.com/policy5> a oac:PreferencePolicy ;
+<https://example.com/policy5> a oac:Preference ;
     odrl:profile oac: ;
     dct:description "Permission for User B to write location data using application A if the purpose is related to provide a service requested by the user." ;
     dct:creator ex:userA ;

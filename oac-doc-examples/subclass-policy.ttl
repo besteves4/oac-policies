@@ -7,7 +7,7 @@ PREFIX dpv: <https://w3id.org/dpv#>
 PREFIX oac: <https://w3id.org/oac#>
 PREFIX ex: <http://example.com>
 
-<https://example.com/policy3> a oac:PreferencePolicy ;
+<https://example.com/policy3> a oac:Preference ;
     dct:description "Permission to read educational qualification data if the purpose is a subclass of research and development" ;
     dct:creator ex:userA ;
     dct:issued "2022-11-09T09:17:13"^^xsd:dateTime ;

@@ -7,7 +7,7 @@ PREFIX dpv: <https://w3id.org/dpv#>
 PREFIX oac: <https://w3id.org/oac#>
 PREFIX ex: <http://example.com>
 
-<https://example.com/requirement3> a oac:RequirementPolicy ;
+<https://example.com/requirement3> a oac:Requirement ;
     dct:description "Requirement to prohibit the sharing of a resource with more than 3 recipients." ;
     dct:creator ex:userA ;
     dct:issued "2023-03-09T13:50:25"^^xsd:dateTime ;

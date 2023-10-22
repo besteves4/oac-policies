@@ -7,7 +7,7 @@ PREFIX dpv: <https://w3id.org/dpv#>
 PREFIX oac: <https://w3id.org/oac#>
 PREFIX ex: <http://example.com>
 
-<https://example.com/policy4> a oac:PreferencePolicy ;
+<https://example.com/policy4> a oac:Preference ;
     dct:description "Permission for service A to write TV viewing behavior data if the purpose is academic research" ;
     dct:creator ex:userA ;
     dct:issued "2022-11-09T09:22:42"^^xsd:dateTime ;
