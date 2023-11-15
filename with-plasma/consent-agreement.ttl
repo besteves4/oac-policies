@@ -4,8 +4,10 @@ PREFIX dpv-legal: <https://w3id.org/dpv/dpv-legal#>
 PREFIX dpv-tech: <https://w3id.org/dpv/dpv-tech#>
 PREFIX oac: <https://w3id.org/oac#>
 PREFIX odrl: <http://www.w3.org/ns/odrl/2/>
+PREFIX pav: <http://purl.org/pav/>
 PREFIX plasma: <https://w3id.org/plasma#>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX schema: <https://schema.org/>
 PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 PREFIX ex: <https://example.com/>
 
@@ -66,19 +68,17 @@ PREFIX ex: <https://example.com/>
   odrl:rightOperand "Some identifier/code of the Azure infrastructure." .
 
 # Athumi (who are the Pod operators), and also Inrupt's ESS implementation (the Solid sever instance)
-# If we declare that plasma:Provider and plasma:Developer are subclasses of dpv-tech:TechnologyProvider
-# and dpv-tech:TechnologyDeveloper, respectively, then we can reuse dpv-tech:hasProvider and 
-# dpv-tech:hasDeveloper to associate with Pod providers, Infrastructure providers, and so on
-# OR we specify a property for each "type" or provider/developer
 # Properties to indicate the SolidPlatform and the SolidSpecification are also needed
 <https://example.com/PodManagementData> a plasma:PodManagementData ;
   dcterms:title "Metadata about Pod xxx" ;
-  dpv-tech:hasProvider <https://example.com/PodProvider_Athumi> ;
-  dpv-tech:hasProvider <https://example.com/SolidPlatformProvider_Inrupt> ;
-  dpv-tech:hasProvider <https://example.com/InfrastructureProvider_Amazon> ;
+  odrl:hasPolicy  <https://example.com/PodAgreement> ;
+  plasma:hasProvider <https://example.com/PodProvider_Athumi> ;
+  plasma:hasProvider <https://example.com/SolidPlatformProvider_Inrupt> ;
+  plasma:hasProvider <https://example.com/InfrastructureProvider_Amazon> ;
   plasma:implementedSolidPlatform <https://example.com/SolidPlatform_ESS> ;
   plasma:implementedSolidSpecification <https://example.com/SolidSpecification_v0_10_0> .
 
+<https://example.com/PodAgreement> a plasma:PodAgreement .
 
 # All entities should have at least name, address, contact
 <https://example.com/PodProvider_Athumi> a plasma:PodProvider ;
@@ -87,17 +87,30 @@ PREFIX ex: <https://example.com/>
   dpv:hasContact "" .
 
 <https://example.com/SolidPlatformProvider_Inrupt> a plasma:SolidPlatformProvider ;
-  dpv:hasName "Inrupt" .
+  dpv:hasName "Inrupt" ;
+  dpv:hasAddress "" ;
+  dpv:hasContact "" .
 
 # Amazon according to https://solidproject.org/users/get-a-pod ?
 <https://example.com/InfrastructureProvider_Amazon> a plasma:InfrastructureProvider ;
-  dpv:hasName "Amazon" .
+  dpv:hasName "Amazon" ;
+  dpv:hasAddress "" ;
+  dpv:hasContact "" .
 
 # TBD what metadata should we provide with the platform ?
 <https://example.com/SolidPlatform_ESS> a plasma:SolidPlatform ;
-  dpv-tech:hasProvider <https://example.com/SolidPlatformProvider_Inrupt> ;
-  dcterms:source <https://www.inrupt.com/products/enterprise-solid-server> .
+    plasma:hasProvider <https://example.com/SolidPlatformProvider_Inrupt> ;
+    dcterms:source <https://www.inrupt.com/products/enterprise-solid-server> ;
+    dpv:hasPolicy <https://www.inrupt.com/privacy-policy> ; # not specific to the ESS
+    # schema:codeRepository <https://example.com/code-repository/solid-server> ; not open source
+    pav:version "2.1" .
+    # dcterms:license <https://dalicc.net/licenselibrary/CC-BY_v4> .
 
 # TBD what metadata should we provide with the specification ? 
 <https://example.com/SolidSpecification_v0_10_0> a plasma:SolidSpecification ;
-  dcterms:source <https://solidproject.org/TR/2022/protocol-20221231> .
+    dcterms:conformsTo <https://solidproject.org/TR/2022/protocol-20221231> ;
+    dcterms:creator "Sarven Capadisli", "Tim Berners-Lee", "Ruben Verborgh", "Kjetil Kjernsmo" ;
+    dcterms:license <https://dalicc.net/licenselibrary/MIT> ;
+    pav:version "0.10.0" ;
+    dcterms:created "2022-12-31"^^xsd:date ;
+    schema:codeRepository <https://github.com/solid/specification> .
